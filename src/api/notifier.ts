@@ -1,14 +1,11 @@
-import { v4 as UUID } from 'uuid';
-
 export default class Notifier {
-    private _callbacks: Map<string, Function> = new Map();
+    private _callbacks: Set<Function> = new Set();
 
     addCallback(callback: Function): Function {
-        const id = UUID();
-        this._callbacks.set(id, callback);
+        this._callbacks.add(callback);
 
         return () => {
-            this._callbacks.delete(id);
+            this._callbacks.delete(callback);
         };
     }
 
