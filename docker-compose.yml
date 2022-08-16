@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  apphub:
+    container_name: apphub
+    image: ghcr.io/harvestcore/apphub:latest
+    restart: always
+    ports:
+      - '8888:80'
+    # volumes:
+    #   - ./apphub-data:/usr/share/nginx/html/data
