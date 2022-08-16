@@ -4,12 +4,28 @@ import { Box, IconButton, Tooltip, Badge } from '@mui/material';
 import appManager from '../../api/appManager';
 import { App } from '../../types';
 
+function getSettings() {
+    return {
+        backgroundColor:
+            appManager.extraSettings?.backgroundColor?.sidebar || '#dddddd',
+        showAbout: appManager.extraSettings?.showAbout,
+        aboutIconColor: appManager.extraSettings?.aboutIconColor || 'default',
+
+        showReset: appManager.extraSettings?.showReset,
+        resetIconColor: appManager.extraSettings?.resetIconColor || 'default',
+
+        isLatestVersion: appManager.isLatestVersion
+    };
+}
+
 export default function Sidebar() {
     const [apps, setApps] = useState<App[]>(appManager.apps);
+    const [settings, setSettings] = useState<any>(getSettings());
 
     useEffect(() => {
-        appManager.dataChangedNotifier.addCallback(() => {
+        appManager.settingsChangedNotifier.addCallback(() => {
             setApps(appManager.apps);
+            setSettings(getSettings());
         });
     }, []);
 
@@ -21,6 +37,10 @@ export default function Sidebar() {
                 'noopener,noreferrer'
             );
         }
+    };
+
+    const handleResetClick = () => {
+        appManager.changeApp(null);
     };
 
     const getAboutTitle = () => {
@@ -42,7 +62,7 @@ export default function Sidebar() {
                 minWidth: '50px',
                 display: 'flex',
                 flexDirection: 'column',
-                backgroundColor: '#dddddd'
+                backgroundColor: settings.backgroundColor
             }}
         >
             <Box
@@ -71,27 +91,59 @@ export default function Sidebar() {
                 ))}
             </Box>
 
-            <Box
-                sx={{
-                    height: '50px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    alignContent: 'center'
-                }}
-            >
-                <Tooltip title={getAboutTitle()} placement="right">
-                    <Badge
-                        variant="dot"
-                        invisible={appManager.isLatestVersion}
-                        color="primary"
-                    >
-                        <IconButton size="small" onClick={handleAboutClick}>
-                            <i className="fa-solid fa-at" />
+            {settings.showAbout && (
+                <Box
+                    sx={{
+                        height: '50px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        alignContent: 'center'
+                    }}
+                >
+                    <Tooltip title="Reset hub" placement="right">
+                        <IconButton
+                            size="small"
+                            onClick={handleResetClick}
+                            sx={{
+                                color: settings.resetIconColor
+                            }}
+                        >
+                            <i className="fa-solid fa-rotate-right" />
                         </IconButton>
-                    </Badge>
-                </Tooltip>
-            </Box>
+                    </Tooltip>
+                </Box>
+            )}
+
+            {settings.showAbout && (
+                <Box
+                    sx={{
+                        height: '50px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        alignContent: 'center'
+                    }}
+                >
+                    <Tooltip title={getAboutTitle()} placement="right">
+                        <Badge
+                            variant="dot"
+                            invisible={settings.isLatestVersion}
+                            color="primary"
+                        >
+                            <IconButton
+                                size="small"
+                                onClick={handleAboutClick}
+                                sx={{
+                                    color: settings.aboutIconColor
+                                }}
+                            >
+                                <i className="fa-solid fa-at" />
+                            </IconButton>
+                        </Badge>
+                    </Tooltip>
+                </Box>
+            )}
         </Box>
     );
 }

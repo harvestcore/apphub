@@ -1,5 +1,15 @@
 {
     "name": "AppHub",
-    "version": "0.0.2",
-    "faviconURL": ""
+    "apps": [],
+    "extra": {
+        "faviconURL": "",
+        "backgroundColor": {
+            "sidebar": "#dddddd",
+            "canvas": "#dddddd"
+        },
+        "showAbout": true,
+        "aboutIconColor": "",
+        "showReset": true,
+        "resetIconColor": ""
+    }
 }

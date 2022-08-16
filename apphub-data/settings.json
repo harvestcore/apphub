@@ -1,5 +1,27 @@
 {
     "name": "AppHub",
-    "version": "0.0.2",
-    "faviconURL": ""
+    "apps": [
+        {
+            "url": "https://github.com",
+            "name": "GitHub",
+            "icon": "fa-brands fa-github"
+        },
+        {
+            "url": "https://google.com/webhp?igu=1",
+            "name": "Google",
+            "icon": "fa-brands fa-google",
+            "iconColor": "#4285F4"
+        }
+    ],
+    "extra": {
+        "faviconURL": "",
+        "backgroundColor": {
+            "sidebar": "#dddddd",
+            "canvas": "#dddddd"
+        },
+        "showAbout": true,
+        "aboutIconColor": "",
+        "showReset": true,
+        "resetIconColor": ""
+    }
 }

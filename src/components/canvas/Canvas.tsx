@@ -4,6 +4,14 @@ import { Box, Typography } from '@mui/material';
 import appManager from '../../api/appManager';
 import { App } from '../../types';
 
+function getSettings() {
+    return {
+        backgroundColor:
+            appManager.extraSettings?.backgroundColor?.canvas || '#dddddd',
+        noOfApps: appManager.apps.length || 0
+    };
+}
+
 function EmptyPage({ noOfApps }: { noOfApps: number }) {
     const zeroApps = noOfApps === 0;
 
@@ -35,15 +43,15 @@ function EmptyPage({ noOfApps }: { noOfApps: number }) {
 
 export default function Canvas() {
     const [app, setApp] = useState<App | null>(appManager.currentApp);
-    const [noOfApps, setNoOfApps] = useState<number>(appManager.apps.length);
+    const [settings, setSettings] = useState<any>(getSettings());
 
     useEffect(() => {
-        appManager.frameChangedNotifier.addCallback(() => {
+        appManager.appChangedNotifier.addCallback(() => {
             setApp(appManager.currentApp);
         });
 
-        appManager.dataChangedNotifier.addCallback(() => {
-            setNoOfApps(appManager.apps.length);
+        appManager.settingsChangedNotifier.addCallback(() => {
+            setSettings(getSettings());
         });
     }, []);
 
@@ -56,10 +64,10 @@ export default function Canvas() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#dddddd'
+                backgroundColor: settings.backgroundColor
             }}
         >
-            {!app && <EmptyPage noOfApps={noOfApps} />}
+            {!app && <EmptyPage noOfApps={settings.noOfApps} />}
             {app && (
                 <iframe
                     width="100%"
