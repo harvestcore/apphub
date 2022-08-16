@@ -7,7 +7,7 @@ export function getData(callback: (version: any) => void) {
             callback(json);
         })
         .catch(_ => {
-            callback({});
+            callback([]);
         });
 }
 
