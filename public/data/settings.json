@@ -1,6 +1,5 @@
 {
     "name": "AppHub",
-    "apps": [],
     "extra": {
         "faviconURL": "",
         "backgroundColor": {
@@ -11,5 +10,6 @@
         "aboutIconColor": "",
         "showReset": true,
         "resetIconColor": ""
-    }
+    },
+    "apps": []
 }
