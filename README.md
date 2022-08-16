@@ -14,7 +14,8 @@ Modify the `data.json` file in the `public/data` folder. Each app has the follow
 {
     "url": "https://github.com",
     "name": "GitHub",
-    "icon": "fa-brands fa-github"
+    "icon": "fa-brands fa-github",
+    "iconColor": "#4285F4"
 }
 ```
 
