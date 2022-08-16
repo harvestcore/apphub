@@ -16,7 +16,7 @@ export default function Sidebar() {
     const handleAboutClick = () => {
         if (window !== null) {
             window.open(
-                'https://github.com/harvestcore/apphub',
+                'https://github.com/harvestcore/apphub/releases',
                 '_blank',
                 'noopener,noreferrer'
             );
