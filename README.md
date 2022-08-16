@@ -21,6 +21,7 @@ Modify the `data.json` file in the `public/data` folder. Each app has the follow
 - `url`: The URL of the app.
 - `name`: The name of the app.
 - `icon`: The icon of the app to be shown. See [Font Awesome](https://fontawesome.com/icons?d=gallery) (only free + brand ones are available).
+- `iconColor`: Optional. The color of the icon.
 
 > The `data.json` **must** contain an array of apps.
 
@@ -66,3 +67,21 @@ Some pages do not allow you to access them directly via an iframe. In some cases
 
 - [Chrome - Ignore X-Frame-Options](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe)
 - [Firefox - Ignore X-Frame-Options](https://addons.mozilla.org/es/firefox/addon/ignore-x-frame-options-header/)
+
+## Some screenshots
+
+Initial page:
+
+![Initial page](doc/imgs/select-app.png)
+
+GitHub example:
+
+![GitHub example](doc/imgs/github.png)
+
+Portainer example:
+
+![Portainer example](doc/imgs/portainer.png)
+
+No apps configured:
+
+![No apps configured](doc/imgs/no-apps.png)

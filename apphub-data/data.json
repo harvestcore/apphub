@@ -7,6 +7,7 @@
     {
         "url": "https://google.com/webhp?igu=1",
         "name": "Google",
-        "icon": "fa-brands fa-google"
+        "icon": "fa-brands fa-google",
+        "iconColor": "#4285F4"
     }
 ]
