@@ -1,46 +1,68 @@
-# Getting Started with Create React App
+# AppHub
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A very simple configurable application hub built using _React_. It allows you to bring different web applications together in one place, displaying their content in an iframe.
 
-## Available Scripts
+## Rationale
 
-In the project directory, you can run:
+I host a bunch of services on my own server, mostly monitoring and administration ones. I wanted to have a single place to manage them all, instead of opening a ton of tabs in my browser every time I wanted to check a service.
 
-### `npm start`
+## Configure the apps available
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Modify the `data.json` file in the `public/data` folder. Each app has the following structure:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```json
+{
+    "url": "https://github.com",
+    "name": "GitHub",
+    "icon": "fa-brands fa-github"
+}
+```
 
-### `npm test`
+- `url`: The URL of the app.
+- `name`: The name of the app.
+- `icon`: The icon of the app to be shown. See [Font Awesome](https://fontawesome.com/icons?d=gallery) (only free + brand ones are available).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+> The `data.json` **must** contain an array of apps.
 
-### `npm run build`
+## Configure the settings of the software
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Modify the `settings.json` file in the `public/data` folder. Settings available:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- `name`: The name of the app displayed in the title of the page. Defaults to `AppHub`.
+- `faviconURL`: The favicon of the app, in case you want to use a different one. Leave it empty to use the default one.
+- `version`: The version of the app.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## How to run the app locally
 
-### `npm run eject`
+**`npm run start`**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Runs the app in the development mode on `http://localhost:3000`.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## How to build the app
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**`npm run build`**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Builds the app for production to the `build` folder. You can deploy it with NGinx or something like that.
 
-## Learn More
+## Run and deploy the app using Docker
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The `docker-compose.override.yml` file is for overriding the default settings (building the image locally) and the `docker-compose.yml` file is for the "default" settings, fetching the image from the container registry (_ghcr.io_).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**`docker-compose build`**: This will build the image locally, in case you're fetching the image from the container registry it will do nothing.
+**`docker-compose up`**: This will start the container and run the app.
+
+In case you want to modify the settings and data of the app running in the container you can uncomment the following lines in the `docker-compose` file:
+
+```yaml
+# volumes:
+#   - ./apphub-data:/usr/share/nginx/html/data
+```
+
+This will mount the `apphub-data` folder to the `/usr/share/nginx/html/data` folder. Then, you can modify the files in that folder to fit your needs. See a configuration example in the `apphub-data` folder.
+
+## Extra info
+
+Some pages do not allow you to access them directly via an iframe. In some cases, like self hosted apps, that issue can be fixed. In other cases this browser extension can be helpful:
+
+- [Chrome - Ignore X-Frame-Options](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe)
+- [Firefox - Ignore X-Frame-Options](https://addons.mozilla.org/es/firefox/addon/ignore-x-frame-options-header/)
